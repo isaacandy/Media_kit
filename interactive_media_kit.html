@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prof. Dr. Isaac Govind Andy | Interactive Media Kit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Chosen Palette: "Visionary Slate" -->
+    <!-- Primary Background: Stone-50 (Warm Neutral)
+         Secondary Background: White
+         Text: Slate-800
+         Accents: Amber-600 (Legacy/Gold), Cyan-700 (Tech/Future), Stone-400 (Structural)
+    -->
+
+    <!-- Application Structure Plan: 
+         Designed as a "Digital Portfolio Dashboard" rather than a linear document.
+         1. Hero Section: "The Architect" - Immediate persona establishment.
+         2. Interactive Timeline: "The Legacy" - Users click through career phases (Corporate -> Entrepreneur -> Global) to see details, preventing text overload.
+         3. Expertise Radar: "The Skillset" - A Radar Chart visualizing the balance between Leadership, Innovation, Academics, and Tech.
+         4. Ecosystem Grid: "The Empire" - Cards representing ventures (iZND, Kinsight, etc.) that reveal details on interaction.
+         5. Innovation Simulator: "Kinsight Logic" - A small interactive module where users input a business need and get a 'predictive insight' simulating his AI platform.
+         6. Global Footprint: Tabulated view of affiliations (UN, Oxford, etc.).
+    -->
+
+    <!-- Visualization & Content Choices:
+         1. Career Trajectory -> Goal: Inform/Organize -> Viz: Interactive Tabbed Timeline -> Interaction: Click tabs to swap content -> Organizes the "Extended Biography" into digestible eras.
+         2. Professional Balance -> Goal: Compare -> Viz: Radar Chart (Chart.js) -> Interaction: Hover for values -> Visualizes the unique mix of CEO, Professor, and Technologist.
+         3. Venture Ecosystem -> Goal: Organize -> Viz: Grid of Cards -> Interaction: Hover/Click to expand details -> Showcases the breadth of companies (iZND, Boardroom, etc.) cleanly.
+         4. Speaking Topics -> Goal: Inform -> Viz: Accordion List -> Interaction: Click to expand -> Keeps the UI clean while offering deep dive into keynotes.
+         CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafaf9;
+            /* stone-50 */
+            color: #1e293b;
+            /* slate-800 */
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            /* Base height */
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        .nav-active {
+            border-bottom: 2px solid #0891b2;
+            /* cyan-600 */
+            color: #0891b2;
+            font-weight: 600;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #d6d3d1;
+            /* stone-300 */
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .timeline-dot.active {
+            background-color: #0891b2;
+            /* cyan-600 */
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-stone-200 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl font-bold text-slate-800 font-serif">iZND</span>
+                    <span class="text-xs uppercase tracking-widest text-slate-500 border-l border-slate-300 pl-2">Media
+                        Kit</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="scrollToSection('hero')"
+                        class="text-stone-600 hover:text-cyan-700 text-sm font-medium transition-colors">Profile</button>
+                    <button onclick="scrollToSection('journey')"
+                        class="text-stone-600 hover:text-cyan-700 text-sm font-medium transition-colors">Journey</button>
+                    <button onclick="scrollToSection('ventures')"
+                        class="text-stone-600 hover:text-cyan-700 text-sm font-medium transition-colors">Ventures</button>
+                    <button onclick="scrollToSection('expertise')"
+                        class="text-stone-600 hover:text-cyan-700 text-sm font-medium transition-colors">Expertise</button>
+                    <button onclick="scrollToSection('connect')"
+                        class="px-4 py-2 bg-slate-900 text-white rounded-full text-sm hover:bg-slate-800 transition-colors">Connect</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="hero" class="relative bg-white border-b border-stone-200">
+        <div class="max-w-6xl mx-auto px-4 py-16 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2 space-y-6">
+                <div
+                    class="inline-block px-3 py-1 bg-cyan-50 text-cyan-800 rounded-full text-xs font-semibold tracking-wide uppercase">
+                    Visionary Technologist</div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight">
+                    Prof. Dr. Isaac <br>
+                    <span class="text-cyan-700">Govind Andy, PhD</span>
+                </h1>
+                <h2 class="text-xl text-stone-500 font-light italic">
+                    Architecting Intelligent Futures Across AI, Blockchain & Digital Health
+                </h2>
+                <p class="text-slate-600 leading-relaxed">
+                    Founder & CEO of iZND Group. A leader who bridged the gap of legacy IT at IBM and Dell, now shaping
+                    the Web3 and AI frontier.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <div
+                        class="flex items-center gap-2 text-sm text-slate-600 bg-stone-50 px-3 py-2 rounded-lg border border-stone-100">
+                        <span class="text-amber-500 font-bold">&#9733;</span> 30+ Awards
+                    </div>
+                    <div
+                        class="flex items-center gap-2 text-sm text-slate-600 bg-stone-50 px-3 py-2 rounded-lg border border-stone-100">
+                        <span class="text-cyan-600 font-bold">&#9679;</span> UN IGF Member
+                    </div>
+                    <div
+                        class="flex items-center gap-2 text-sm text-slate-600 bg-stone-50 px-3 py-2 rounded-lg border border-stone-100">
+                        <span class="text-indigo-600 font-bold">&#9875;</span> Oxford Honorary Prof
+                    </div>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <!-- Portrait Image -->
+                <div
+                    class="w-72 h-72 md:w-96 md:h-96 rounded-full border-4 border-white shadow-xl relative overflow-hidden">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgDkMVff9CYJl9bYGWdFOVXHLQEeiHkndKzbisZ0axRBNCocNQ6Gub4c35594z4IftkmQZApWFdVGUAiMgdQWVqc9xCz6jFG4oiRdAL3oR8K-XdFxrucDKOal_MROGlKFfwfkHnR-KjkZSvnrxR_g62UxI-DLavnwN1QeAoujMQpGoddPlI6J9IoIsq9Vc/w400-h335-rw/1000129743.jpg"
+                        alt="Prof. Dr. Isaac Govind Andy" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
+
+        <!-- Section: The Journey (Interactive Timeline) -->
+        <section id="journey">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">The Legacy of Innovation</h2>
+                <p class="text-stone-600">
+                    From the "Golden Era" of IT infrastructure to the decentralized future.
+                    Select an era to explore Isaac's evolution.
+                </p>
+            </div>
+
+            <div
+                class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden flex flex-col md:flex-row min-h-[400px]">
+                <!-- Timeline Navigation -->
+                <div class="md:w-1/3 bg-stone-50 border-r border-stone-200 p-6 flex flex-col justify-center space-y-2">
+                    <button onclick="updateTimeline('corporate')" id="btn-corporate"
+                        class="timeline-btn text-left p-4 rounded-xl transition-all bg-white shadow-sm border-l-4 border-cyan-600">
+                        <div class="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1">Phase I</div>
+                        <div class="font-bold text-slate-800">Corporate Foundations</div>
+                    </button>
+                    <button onclick="updateTimeline('entrepreneur')" id="btn-entrepreneur"
+                        class="timeline-btn text-left p-4 rounded-xl transition-all hover:bg-white hover:shadow-sm border-l-4 border-transparent text-stone-500">
+                        <div class="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1">Phase II</div>
+                        <div class="font-bold">Entrepreneurial Expansion</div>
+                    </button>
+                    <button onclick="updateTimeline('global')" id="btn-global"
+                        class="timeline-btn text-left p-4 rounded-xl transition-all hover:bg-white hover:shadow-sm border-l-4 border-transparent text-stone-500">
+                        <div class="text-xs font-bold text-stone-400 uppercase tracking-wider mb-1">Phase III</div>
+                        <div class="font-bold">Global Governance</div>
+                    </button>
+                </div>
+
+                <!-- Timeline Content -->
+                <div class="md:w-2/3 p-8 md:p-12 flex items-center bg-white">
+                    <div id="timeline-content">
+                        <!-- Content injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Ventures Ecosystem (Grid) -->
+        <section id="ventures">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-10 border-b border-stone-200 pb-4">
+                <div class="max-w-2xl">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-2">Current Projects & Ecosystem</h2>
+                    <p class="text-stone-600">
+                        Strategic integration of infrastructure, AI, and manufacturing.
+                    </p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <span class="text-xs font-mono bg-stone-900 text-white px-3 py-1 rounded">iZND Group</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1: Kinsight -->
+                <div class="group bg-white p-6 rounded-xl border border-stone-200 card-hover cursor-default">
+                    <div class="w-16 h-16 mb-4 rounded-lg overflow-hidden bg-white flex items-center justify-center">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhWUuJKLFV1Cpps0DHjQ8W9PCoXnldxp7sLCWOg0Q_LwyM4waxHJzTy6l_e3k-lHLISX4EelJK7jTruGuj64KYTjPeepE0MKGwMJhG2hidYMp4ZX8YuKnywfv7o-Ir_1pHiKZeTR5-2hwyzEuuXmCrDMQ1RgUb7bjbZJK8S90ykehVifRTl4F3T6urV5rQ/s16000-rw/Kinsight%20AI%20Logo.png"
+                            alt="Kinsight AI" class="w-full h-full object-contain">
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Kinsight AI</h3>
+                    <p class="text-sm text-stone-500 mb-4">Predictive Intelligence Platform</p>
+                    <p class="text-stone-600 text-sm leading-relaxed">
+                        Leverages AI-powered workflow optimization to turn complex data into actionable business
+                        strategy.
+                    </p>
+                </div>
+
+                <!-- Card 2: TheAlien.888 -->
+                <div class="group bg-white p-6 rounded-xl border border-stone-200 card-hover cursor-default">
+                    <div class="w-16 h-16 mb-4 rounded-lg overflow-hidden bg-white flex items-center justify-center">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCdLDhCv71uR6hcp2hOE59__hIbTNncjeIrg&s"
+                            alt="TheAlien.888" class="w-full h-full object-contain">
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">TheAlien.888</h3>
+                    <p class="text-sm text-stone-500 mb-4">AI NFT Collection</p>
+                    <p class="text-stone-600 text-sm leading-relaxed">
+                        Pioneering first-gen AI NFT models since 2020, pushing the boundaries of digital art and
+                        blockchain technology.
+                    </p>
+                </div>
+
+                <!-- Card 3: iZNDVerse -->
+                <div class="group bg-white p-6 rounded-xl border border-stone-200 card-hover cursor-default">
+                    <div class="w-16 h-16 mb-4 rounded-lg overflow-hidden bg-white flex items-center justify-center">
+                        <img src="https://media.licdn.com/dms/image/v2/D5622AQEGl1XZ4l7o5w/feedshare-shrink_800/B56ZZUJKm1HsAo-/0/1745168412188?e=2147483647&v=beta&t=OLgQcHoSeBrd-4g_4MQqcPcM92Zd7gP8_s4swy5sSo8"
+                            alt="iZNDVerse" class="w-full h-full object-contain">
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">iZNDVerse</h3>
+                    <p class="text-sm text-stone-500 mb-4">Metaverse Platform</p>
+                    <p class="text-stone-600 text-sm leading-relaxed">
+                        Immersive Web3 metaverse experience combining virtual worlds with blockchain technology.
+                    </p>
+                </div>
+
+                <!-- Card 4: iZND Coin -->
+                <div class="group bg-white p-6 rounded-xl border border-stone-200 card-hover cursor-default">
+                    <div class="w-16 h-16 mb-4 rounded-lg overflow-hidden bg-white flex items-center justify-center">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhFcDomoXb7rF6Zj0Wyh0bQmvxWSSr-AH0-OWgJzr8lfi7QWnhY1IZ2V7Q0oGJELP6oDwQTkaRsgzgg0pnvY8LagkX6E9w39Vh_sDgGQU0yU4nzWd4nTxB5rVK7mnj-ltgbFdNp7TlsUivPo5ICXM3zgM5WD_lQ1rBc3W-6bKIKctc99c2xjyHhuAvJ2sXp/w200-h200/iZND%20Coin.gif"
+                            alt="iZND Coin" class="w-full h-full object-contain">
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">iZND Coin</h3>
+                    <p class="text-sm text-stone-500 mb-4">Cryptocurrency on Polygon</p>
+                    <p class="text-stone-600 text-sm leading-relaxed">
+                        Secure, scalable blockchain transactions powered by Polygon network for the iZND ecosystem.
+                    </p>
+                </div>
+
+                <!-- Card 5: iZND Web3 AI -->
+                <div class="group bg-white p-6 rounded-xl border border-stone-200 card-hover cursor-default">
+                    <div class="w-16 h-16 mb-4 rounded-lg overflow-hidden bg-white flex items-center justify-center">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNXfJHnL5tOIfEN912bhn5rzLSivNnE0Fd3g&s"
+                            alt="iZND Web3 AI" class="w-full h-full object-contain">
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">iZND Web3 AI</h3>
+                    <p class="text-sm text-stone-500 mb-4">AI-Powered Web3 Solutions</p>
+                    <p class="text-stone-600 text-sm leading-relaxed">
+                        Intelligent decentralized applications combining artificial intelligence with Web3
+                        infrastructure.
+                    </p>
+                </div>
+
+                <!-- Card 6: iZND Services -->
+                <div class="group bg-white p-6 rounded-xl border border-stone-200 card-hover cursor-default">
+                    <div
+                        class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-700 text-2xl mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                        &#127760;
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">iZND Services</h3>
+                    <p class="text-sm text-stone-500 mb-4">Global IT Outsourcing</p>
+                    <p class="text-stone-600 text-sm leading-relaxed">
+                        Managed services, cloud computing, and cybersecurity. Bridging legacy systems with future
+                        possibilities.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Expertise & Thought Leadership (Radar Chart + Accordion) -->
+        <section id="expertise" class="bg-stone-900 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Left: Chart -->
+                <div>
+                    <h2 class="text-3xl font-bold mb-6">The Professional Matrix</h2>
+                    <p class="text-stone-400 mb-8">
+                        A unique convergence of executive leadership, deep technical ability, and academic rigor.
+                    </p>
+                    <div class="chart-container bg-stone-800/50 rounded-2xl p-4">
+                        <canvas id="expertiseChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Right: Speaking Topics -->
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-serif text-amber-500 mb-4">Speaking & Thought Leadership</h3>
+
+                    <!-- Topic 1 -->
+                    <div class="border-b border-stone-700 pb-4">
+                        <button onclick="toggleAccordion('topic1')"
+                            class="flex justify-between items-center w-full text-left group focus:outline-none">
+                            <span class="text-lg font-medium text-stone-200 group-hover:text-white transition-colors">AI
+                                Ethics & Governance</span>
+                            <span id="icon-topic1" class="text-amber-500 text-xl transition-transform">+</span>
+                        </button>
+                        <div id="topic1" class="hidden mt-3 text-stone-400 text-sm leading-relaxed">
+                            Navigating the moral landscape of intelligent machines. How organizations can implement AI
+                            responsibly while driving growth.
+                        </div>
+                    </div>
+
+                    <!-- Topic 2 -->
+                    <div class="border-b border-stone-700 pb-4">
+                        <button onclick="toggleAccordion('topic2')"
+                            class="flex justify-between items-center w-full text-left group focus:outline-none">
+                            <span
+                                class="text-lg font-medium text-stone-200 group-hover:text-white transition-colors">Blockchain
+                                Adoption</span>
+                            <span id="icon-topic2" class="text-amber-500 text-xl transition-transform">+</span>
+                        </button>
+                        <div id="topic2" class="hidden mt-3 text-stone-400 text-sm leading-relaxed">
+                            Moving beyond the hype. Building enterprise-grade decentralization strategies that solve
+                            real-world supply chain and data integrity problems.
+                        </div>
+                    </div>
+
+                    <!-- Topic 3 -->
+                    <div class="border-b border-stone-700 pb-4">
+                        <button onclick="toggleAccordion('topic3')"
+                            class="flex justify-between items-center w-full text-left group focus:outline-none">
+                            <span
+                                class="text-lg font-medium text-stone-200 group-hover:text-white transition-colors">Digital
+                                Health Transformation</span>
+                            <span id="icon-topic3" class="text-amber-500 text-xl transition-transform">+</span>
+                        </button>
+                        <div id="topic3" class="hidden mt-3 text-stone-400 text-sm leading-relaxed">
+                            The intersection of IT and patient outcomes. How data interoperability saves lives and
+                            streamlines hospital operations.
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6">
+                        <blockquote class="border-l-4 border-cyan-500 pl-4 italic text-stone-300">
+                            "Innovation is not just about the technology we build; it's about the intelligence we
+                            empower."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Interactive Simulator -->
+        <section class="bg-cyan-50 rounded-2xl border border-cyan-100 p-8 text-center">
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">Kinsight Logic Simulator</h2>
+            <p class="text-slate-600 text-sm mb-6 max-w-xl mx-auto">
+                Experience the core philosophy of Isaac's predictive platforms. Select a business challenge to generate
+                a strategic insight.
+            </p>
+
+            <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-sm">
+                <label class="block text-left text-xs font-bold text-slate-500 uppercase mb-2">Select Challenge:</label>
+                <select id="sim-input"
+                    class="w-full bg-stone-50 border border-stone-200 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 mb-4 text-slate-700">
+                    <option value="workflow">Inefficient Workflows</option>
+                    <option value="legacy">Legacy System Drag</option>
+                    <option value="trust">Data Trust Issues</option>
+                </select>
+                <button onclick="runSimulation()"
+                    class="w-full bg-slate-900 text-white py-3 rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors">Generate
+                    Insight</button>
+
+                <div id="sim-output" class="mt-6 hidden text-left p-4 bg-cyan-50 rounded-lg border border-cyan-100">
+                    <div class="text-xs font-bold text-cyan-700 uppercase mb-1">Strategic Output:</div>
+                    <p class="text-slate-800 text-sm font-medium" id="sim-text">...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Key Highlights Table -->
+        <section class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-slate-900 mb-6 text-center">Global Impact Highlights</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-slate-600">
+                    <thead class="text-xs text-slate-500 uppercase bg-stone-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Leadership</th>
+                            <th scope="col" class="px-6 py-3">Innovation</th>
+                            <th scope="col" class="px-6 py-3">Global Affiliation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white border-b border-stone-100">
+                            <td class="px-6 py-4 font-medium text-slate-900">Founder & CEO, iZND Group</td>
+                            <td class="px-6 py-4">Creator of Kinsight AI</td>
+                            <td class="px-6 py-4">UN IGF Advisory Member</td>
+                        </tr>
+                        <tr class="bg-white border-b border-stone-100">
+                            <td class="px-6 py-4 font-medium text-slate-900">Honorary Prof, Oxford</td>
+                            <td class="px-6 py-4">Web3 Pioneer (TheAlien.888)</td>
+                            <td class="px-6 py-4">RIPE NCC Ambassador (MY)</td>
+                        </tr>
+                        <tr class="bg-white">
+                            <td class="px-6 py-4 font-medium text-slate-900">30+ Global Awards</td>
+                            <td class="px-6 py-4">Sustainable Tech (Green IT)</td>
+                            <td class="px-6 py-4">UN Global Compact Participant</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Contact / Footer -->
+        <footer id="connect" class="border-t border-stone-200 pt-12 pb-8">
+            <div class="text-center space-y-4">
+                <h2 class="text-3xl font-serif font-bold text-slate-900">Connect with the Architect</h2>
+                <div class="flex justify-center gap-6 mt-4">
+                    <a href="https://izndgroup.com" target="_blank"
+                        class="px-6 py-3 bg-white border border-stone-200 rounded-lg text-slate-700 hover:border-cyan-600 hover:text-cyan-700 transition-colors shadow-sm">
+                        Visit izndgroup.com
+                    </a>
+                </div>
+                <div class="mt-8 text-stone-400 text-sm">
+                    <p>&copy; 2025 iZND Group. All Rights Reserved.</p>
+                    <p>Global Operations / Malaysia</p>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- JavaScript Implementation -->
+    <script>
+        // --- Data Store ---
+        const timelineData = {
+            corporate: {
+                title: "Corporate Foundations",
+                role: "IBM, Dell, SITA",
+                content: "Isaac's journey is rooted in the 'Golden Era' of IT infrastructure. He managed complex service delivery models that set industry standards. Key achievement: Instrumental in the aviation industry's digital migration at SITA, specifically spearheading the <strong>e-ticketing compliance project for Malaysia Airlines</strong>."
+            },
+            entrepreneur: {
+                title: "Entrepreneurial Expansion",
+                role: "Founder & CEO",
+                content: "Beyond corporate leadership, Isaac founded multiple high-impact ventures including <strong>iZND Group</strong> (Managed Services), <strong>Boardroom Technologies</strong> (Hardware/Software Integration), and <strong>Software House PLT</strong> (Bespoke Dev). He built a global powerhouse in IT outsourcing."
+            },
+            global: {
+                title: "Global Governance & Academia",
+                role: "Ambassador & Professor",
+                content: "An active contributor to global internet governance. Roles include: <strong>Honorary Professor</strong> at the Academic Union (Oxford), Member of the <strong>UN IGF</strong> Multi-stakeholder Advisory Group, and Malaysian Ambassador for <strong>RIPE NCC</strong>. Recipient of 30+ international awards."
+            }
+        };
+
+        const simulationData = {
+            workflow: "Suggestion: Implement AI-driven process mining to identify bottlenecks. Automate repetitive tasks using Kinsight's predictive workflow engine to achieve 10x efficiency.",
+            legacy: "Suggestion: Adopt a hybrid cloud strategy. Use API wrappers to expose legacy data to modern Web3 front-ends without full system replacement.",
+            trust: "Suggestion: Integrate Blockchain for immutable audit trails. Ensure data integrity for stakeholders using a decentralized ledger approach."
+        };
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Init Timeline
+            updateTimeline('corporate');
+
+            // Init Radar Chart
+            initRadarChart();
+        });
+
+        // --- Navigation Scroll ---
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- Timeline Interaction ---
+        function updateTimeline(key) {
+            // Update UI Buttons
+            const buttons = document.querySelectorAll('.timeline-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-white', 'shadow-sm', 'border-cyan-600');
+                btn.classList.add('border-transparent', 'text-stone-500');
+                btn.querySelector('.text-slate-800')?.classList.remove('text-slate-800');
+            });
+
+            const activeBtn = document.getElementById(`btn-${key}`);
+            activeBtn.classList.remove('border-transparent', 'text-stone-500');
+            activeBtn.classList.add('bg-white', 'shadow-sm', 'border-cyan-600');
+            activeBtn.querySelector('.font-bold:last-child').classList.add('text-slate-800');
+
+            // Inject Content
+            const data = timelineData[key];
+            const contentDiv = document.getElementById('timeline-content');
+
+            // Simple fade effect
+            contentDiv.style.opacity = 0;
+            setTimeout(() => {
+                contentDiv.innerHTML = `
+                    <h3 class="text-2xl font-bold text-slate-800 mb-1">${data.title}</h3>
+                    <div class="text-sm font-semibold text-cyan-700 uppercase tracking-wide mb-4">${data.role}</div>
+                    <p class="text-stone-600 leading-relaxed text-lg">${data.content}</p>
+                `;
+                contentDiv.style.opacity = 1;
+            }, 200);
+            contentDiv.style.transition = 'opacity 0.3s ease-in-out';
+        }
+
+        // --- Chart.js Radar Chart ---
+        function initRadarChart() {
+            const ctx = document.getElementById('expertiseChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Executive Leadership', 'AI Innovation', 'Blockchain/Web3', 'IT Infrastructure', 'Academic Rigor', 'Global Policy'],
+                    datasets: [{
+                        label: 'Prof. Dr. Isaac Andy',
+                        data: [95, 90, 85, 95, 80, 85],
+                        fill: true,
+                        backgroundColor: 'rgba(8, 145, 178, 0.2)', // Cyan-600 transparent
+                        borderColor: '#0891b2', // Cyan-600
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#0891b2',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#0891b2'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(255, 255, 255, 0.2)' },
+                            grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                            pointLabels: {
+                                color: '#d6d3d1', // stone-300
+                                font: { size: 11, family: 'Inter' }
+                            },
+                            ticks: { display: false, backdropColor: 'transparent' },
+                            suggestedMin: 50,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                            titleColor: '#1e293b',
+                            bodyColor: '#1e293b',
+                            borderColor: '#e2e8f0',
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function (context) {
+                                    return context.label + ': ' + context.raw + '% Proficiency';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- Accordion Logic ---
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById(`icon-${id}`);
+
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.innerText = '-';
+                icon.classList.add('text-cyan-400');
+            } else {
+                content.classList.add('hidden');
+                icon.innerText = '+';
+                icon.classList.remove('text-cyan-400');
+            }
+        }
+
+        // --- Simulation Logic ---
+        function runSimulation() {
+            const key = document.getElementById('sim-input').value;
+            const outputDiv = document.getElementById('sim-output');
+            const outputText = document.getElementById('sim-text');
+            const result = simulationData[key];
+
+            outputDiv.classList.remove('hidden');
+            outputText.innerText = "Analyzing...";
+
+            setTimeout(() => {
+                outputText.innerText = result;
+            }, 600);
+        }
+    </script>
+</body>
+
+</html>

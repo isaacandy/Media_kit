@@ -109,16 +109,23 @@
         {
           "@type": "Person",
           "@id": "https://iznd.xyz/#person",
-          "name": "Prof. Dr. Isaac Govind Andy",
+          "name": "Isaac Govind Andy",
           "honorificPrefix": "Prof. Dr.",
           "honorificSuffix": "PhD",
           "jobTitle": "Founder & CEO",
           "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgDkMVff9CYJl9bYGWdFOVXHLQEeiHkndKzbisZ0axRBNCocNQ6Gub4c35594z4IftkmQZApWFdVGUAiMgdQWVqc9xCz6jFG4oiRdAL3oR8K-XdFxrucDKOal_MROGlKFfwfkHnR-KjkZSvnrxR_g62UxI-DLavnwN1QeAoujMQpGoddPlI6J9IoIsq9Vc/w400-h335-rw/1000129743.jpg",
           "description": "Architecting Intelligent Futures Across AI, Blockchain & Digital Health. Founder & CEO of iZND Group.",
-          "url": "https://iznd.xyz",
+          "url": "https://iznd.xyz/",
           "sameAs": [
             "https://linkedin.com/in/isaacandy",
             "https://izndgroup.com"
+          ],
+          "knowsAbout": [
+            "AI Ethics & Governance",
+            "Blockchain Adoption",
+            "Digital Health Transformation",
+            "IT Infrastructure",
+            "Global Internet Governance"
           ],
           "worksFor": {
             "@type": "Organization",
@@ -140,11 +147,37 @@
           }
         },
         {
-          "@type": "WebPage",
-          "@id": "https://iznd.xyz/media-kit",
-          "url": "https://iznd.xyz/index.html",
+          "@type": ["WebPage", "Article"],
+          "@id": "https://iznd.xyz/#webpage",
+          "url": "https://iznd.xyz/",
           "name": "Prof. Dr. Isaac Govind Andy - Interactive Media Kit",
+          "isPartOf": { "@id": "https://iznd.xyz/#website" },
           "mainEntity": {
+            "@id": "https://iznd.xyz/#person"
+          },
+          "description": "The official interactive media kit for Prof. Dr. Isaac Govind Andy, detailing his professional journey, ventures, expertise, and thought leadership topics.",
+          "author": {
+            "@id": "https://iznd.xyz/#person"
+          },
+          "publisher": {
+            "@id": "https://iznd.xyz/#organization"
+          },
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Speaking & Thought Leadership Topics",
+            "itemListElement": [
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Ethics & Governance" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Blockchain Adoption" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Digital Health Transformation" } }
+            ]
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://iznd.xyz/#website",
+          "url": "https://iznd.xyz/",
+          "name": "iZND Group",
+          "publisher": {
             "@id": "https://iznd.xyz/#person"
           }
         }

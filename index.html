@@ -109,11 +109,14 @@
         {
           "@type": "Person",
           "@id": "https://iznd.xyz/#person",
-          "name": "Isaac Govind Andy",
+          "name": "Prof. Dr. Isaac Govind Andy, PhD",
+          "givenName": "Isaac",
+          "familyName": "Andy",
+          "alternateName": "Isaac Govind Andy",
           "honorificPrefix": "Prof. Dr.",
           "honorificSuffix": "PhD",
           "jobTitle": "Founder & CEO",
-          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgDkMVff9CYJl9bYGWdFOVXHLQEeiHkndKzbisZ0axRBNCocNQ6Gub4c35594z4IftkmQZApWFdVGUAiMgdQWVqc9xCz6jFG4oiRdAL3oR8K-XdFxrucDKOal_MROGlKFfwfkHnR-KjkZSvnrxR_g62UxI-DLavnwN1QeAoujMQpGoddPlI6J9IoIsq9Vc/w400-h335-rw/1000129743.jpg",
+          "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgDkMVff9CYJl9bYGWdFOVXHLQEeiHkndKzbisZ0axRBNCocNQ6Gub4c35594z4IftkmQZApWFdVGUAiMgdQWVqc9xCz6jFG4oiRdAL3oR8K-XdFxrucDKOal_MROGlKFfwfkHnR-KjkZSvnrxR_g62UxI-DLavnwN1QeAoujMQpGoddPlI6J9IoIsq9Vc/s1600/1000129743.jpg",
           "description": "Architecting Intelligent Futures Across AI, Blockchain & Digital Health. Founder & CEO of iZND Group.",
           "url": "https://iznd.xyz/",
           "sameAs": [
@@ -127,11 +130,30 @@
             "IT Infrastructure",
             "Global Internet Governance"
           ],
+          "award": "Over 30 international awards for technology and business leadership.",
+          "hasOccupation": [
+            { "@type": "Role", "roleName": "Founder & CEO", "organization": { "@id": "https://iznd.xyz/#organization" } },
+            { "@type": "Role", "roleName": "Honorary Professor", "organization": { "@type": "Organization", "name": "Academic Union, Oxford" } },
+            { "@type": "Role", "roleName": "Advisory Member", "organization": { "@type": "Organization", "name": "UN Internet Governance Forum (IGF)" } }
+          ],
           "worksFor": {
             "@type": "Organization",
             "@id": "https://iznd.xyz/#organization"
           },
-          "alumniOf": "Oxford Academic Union"
+          "alumniOf": {
+            "@type": "EducationalOrganization",
+            "name": "Academic Union, Oxford"
+          },
+          "affiliation": [
+            {
+              "@type": "Organization",
+              "name": "United Nations Internet Governance Forum (IGF)"
+            },
+            {
+              "@type": "Organization",
+              "name": "RIPE NCC"
+            }
+          ]
         },
         {
           "@type": "Organization",
@@ -140,6 +162,9 @@
           "url": "https://izndgroup.com",
           "logo": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTrX8ZxxqynZUh0k9gK_NMJIUmNabzcPpWGjRdYAIuXqpr_YFOxbTT8BGVK4hAjv0kWhCaVdiCf-YSb8f_1JCwDXB2S3h6W2z9SwOi_YZnMHSChyphenhyphendg38zbT1OzgzyDO-xdIMjv82pPaqo/s320/iznd+logo+512x512.png",
           "description": "Strategic integration of infrastructure, AI, and manufacturing.",
+          "founder": {
+            "@id": "https://iznd.xyz/#person"
+          },
           "contactPoint": {
             "@type": "ContactPoint",
             "email": "info@iznd.xyz",
@@ -147,7 +172,7 @@
           }
         },
         {
-          "@type": ["WebPage", "Article"],
+          "@type": "ProfilePage",
           "@id": "https://iznd.xyz/#webpage",
           "url": "https://iznd.xyz/",
           "name": "Prof. Dr. Isaac Govind Andy - Interactive Media Kit",
